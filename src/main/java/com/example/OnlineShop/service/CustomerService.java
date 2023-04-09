@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CustomerService {
+public class CustomerService implements CustomerServiceInt{
 
     private final CustomerRepository customerRepository;
 
@@ -21,7 +21,7 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public CustomerResponse loginCustomer(CustomerLogin user) throws Exception {
+    public CustomerResponse loginCustomer(CustomerLogin user) {
         String username = user.getUsernameCustomer();
         String password = user.getPasswordCustomer();
         Customer customer = null;
@@ -40,7 +40,7 @@ public class CustomerService {
 
     }
 
-    public CustomerResponse registerCustomer(CustomerRequest customer) throws Exception {
+    public CustomerResponse registerCustomer(CustomerRequest customer) {
         String username = customer.getUsernameCustomer();
         if(username != null && !"".equals(username)){
             Customer customer1 = customerRepository.findUserByUsernameCustomer(username);
@@ -63,7 +63,7 @@ public class CustomerService {
         return customerResponse;
     }
 
-    public CustomerResponse editCustomer(CustomerRequest customer) throws Exception{
+    public CustomerResponse editCustomer(CustomerRequest customer) {
         Customer customer1 = customerRepository.findById(customer.getIdCustomer()).orElseThrow(
                 () -> new RuntimeException("Customer with this id is not found"));
 

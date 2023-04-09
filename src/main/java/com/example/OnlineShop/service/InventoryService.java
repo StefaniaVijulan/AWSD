@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class InventoryService {
+public class InventoryService implements InventoryServiceInt{
 
     public final InventoryRepository inventoryRepository;
 

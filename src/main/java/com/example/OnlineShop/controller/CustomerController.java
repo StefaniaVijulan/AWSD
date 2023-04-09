@@ -3,10 +3,8 @@ package com.example.OnlineShop.controller;
 import com.example.OnlineShop.dto.customer.CustomerLogin;
 import com.example.OnlineShop.dto.customer.CustomerRequest;
 import com.example.OnlineShop.dto.customer.CustomerResponse;
-import com.example.OnlineShop.model.Customer;
 import com.example.OnlineShop.model.Order;
-import com.example.OnlineShop.service.CustomerService;
-import org.springframework.http.ResponseEntity;
+import com.example.OnlineShop.service.CustomerServiceInt;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,42 +14,43 @@ import java.util.List;
 @RequestMapping("/customer")
 public class CustomerController {
 
-    private final CustomerService customerService;
+    private final CustomerServiceInt customerServiceInt;
 
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
+    public CustomerController(CustomerServiceInt customerServiceInt) {
+        this.customerServiceInt = customerServiceInt;
     }
+
 
     @PostMapping("/login")
     public CustomerResponse loginCustomer(@RequestBody @Valid CustomerLogin customerRequest) throws Exception {
-        return customerService.loginCustomer(customerRequest);
+        return customerServiceInt.loginCustomer(customerRequest);
     }
 
     @PostMapping("/register")
     public CustomerResponse registerCustomer(@RequestBody @Valid CustomerRequest customer) throws Exception {
 
-        return customerService.registerCustomer(customer);
+        return customerServiceInt.registerCustomer(customer);
     }
 
-    @PutMapping("/editCustomer")
+    @PutMapping
     public CustomerResponse editCustomer(@RequestBody CustomerRequest customer) throws Exception {
-        return customerService.editCustomer(customer);
+        return customerServiceInt.editCustomer(customer);
     }
 
-    @PutMapping("/editPasswordCustomer")
+    @PutMapping("/change_password")
     public String editPasswordCustomer(@RequestParam Integer idCustomer,
                                       @RequestParam  String oldPass,
                                       @RequestParam String newPass ){
-        return customerService.editPasswordCustomer(idCustomer,oldPass, newPass);
+        return customerServiceInt.editPasswordCustomer(idCustomer,oldPass, newPass);
     }
 
-    @DeleteMapping("/deleteCustomer/{idCustomer}")
+    @DeleteMapping("/{idCustomer}")
     public String deleteCustomer(@PathVariable Integer idCustomer){
-        return customerService.deleteCustomer(idCustomer);
+        return customerServiceInt.deleteCustomer(idCustomer);
     }
 
-    @GetMapping("/getAllOrders")
+    @GetMapping
     public List<Order> getAllOrder(@RequestParam Integer idCustomer){
-        return customerService.orderList(idCustomer);
+        return customerServiceInt.orderList(idCustomer);
     }
 }

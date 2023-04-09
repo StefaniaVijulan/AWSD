@@ -3,8 +3,7 @@ package com.example.OnlineShop.controller;
 import com.example.OnlineShop.dto.product.ProductRequest;
 import com.example.OnlineShop.dto.product.ProductResponse;
 import com.example.OnlineShop.model.Product;
-import com.example.OnlineShop.service.ProductService;
-import org.springframework.http.ResponseEntity;
+import com.example.OnlineShop.service.ProductServiceInt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,35 +12,36 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
-    private final ProductService productService;
+    private final ProductServiceInt productServiceInt;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    public ProductController(ProductServiceInt productServiceInt) {
+        this.productServiceInt = productServiceInt;
     }
 
-    @PostMapping("/addProduct")
+
+    @PostMapping
     public ProductResponse addProduct(@RequestBody ProductRequest product, @RequestParam Integer idCategory) throws Exception {
-        return productService.addProduct(product, idCategory);
+        return productServiceInt.addProduct(product, idCategory);
     }
-    @PutMapping("/editProduct")
+    @PutMapping
     public ProductResponse editProduct(@RequestBody ProductRequest product){
-        return productService.editProduct(product);
+        return productServiceInt.editProduct(product);
     }
-    @DeleteMapping("/deleteProduct")
+    @DeleteMapping
     public String deleteProduct(@RequestParam Integer idProduct) {
-        return productService.deleteProduct(idProduct);
+        return productServiceInt.deleteProduct(idProduct);
     }
-    @GetMapping("/getAllProduct")
+    @GetMapping
     public List<Product> listOfProducts() throws Exception {
-        return productService.getAllProduct();
+        return productServiceInt.getAllProduct();
     }
-    @GetMapping("/getAllProductWithPriceBiggerThenAValue")
+    @GetMapping("/price_bigger_then_value")
     public List<Product> getAllProductWithPriceBiggerThenAValue(@RequestParam Double value) throws Exception {
-        return productService.getAllProductWithPriceBiggerThenAValue(value);
+        return productServiceInt.getAllProductWithPriceBiggerThenAValue(value);
     }
-    @PutMapping("/editCurrentCategory")
+    @PutMapping("/category")
     public String editCurrentCategory(@RequestParam Integer idProduct, @RequestParam Integer newCategory){
-        return productService.editCurrentCategory(idProduct, newCategory);
+        return productServiceInt.editCurrentCategory(idProduct, newCategory);
     }
 
 

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CategoryService {
+public class CategoryService implements CategoryServiceInt{
 
     public final CategoryRepository categoryRepository;
 

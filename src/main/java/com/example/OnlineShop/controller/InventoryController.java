@@ -3,49 +3,46 @@ package com.example.OnlineShop.controller;
 import com.example.OnlineShop.dto.inventory.InventoryRequest;
 import com.example.OnlineShop.dto.inventory.InventoryResponse;
 import com.example.OnlineShop.model.Inventory;
-import com.example.OnlineShop.model.Order;
-import com.example.OnlineShop.repository.InventoryRepository;
-import com.example.OnlineShop.service.InventoryService;
+import com.example.OnlineShop.service.InventoryServiceInt;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/inventory")
 public class InventoryController {
-    private final InventoryService inventoryService;
+    private final InventoryServiceInt inventoryServiceInt;
 
-    public InventoryController(InventoryService inventoryService) {
-        this.inventoryService = inventoryService;
+    public InventoryController(InventoryServiceInt inventoryServiceInt) {
+        this.inventoryServiceInt = inventoryServiceInt;
     }
-    @PostMapping("/addInventory")
+
+    @PostMapping
     public InventoryResponse addInventory(@RequestBody InventoryRequest inventory){
-        return inventoryService.addInventory(inventory);
+        return inventoryServiceInt.addInventory(inventory);
     }
 
-    @PutMapping("/editInventory")
+    @PutMapping
     public InventoryResponse editInventory(@RequestBody InventoryRequest inventory, @RequestParam Integer idInventory){
-        return inventoryService.editInventory(inventory, idInventory);
+        return inventoryServiceInt.editInventory(inventory, idInventory);
     }
 
-    @DeleteMapping("/deleteInventory")
+    @DeleteMapping
     public String deleteInventory(@RequestParam Integer idInventory){
-        return inventoryService.deleteInventory(idInventory);
+        return inventoryServiceInt.deleteInventory(idInventory);
     }
 
-    @GetMapping("/getAllInventory")
+    @GetMapping
     public List<Inventory> getAllInventory(){
-        return inventoryService.getAllInventory();
+        return inventoryServiceInt.getAllInventory();
     }
 
-    @GetMapping("/getAllInventoryWhereSalesIsEmpty")
+    @GetMapping("/salesIs_empty")
     public List<Inventory> getAllInventoryWhereSalesIsEmpty(){
-        return inventoryService.getAllInventoryWhereSalesIsMoreThenOne();
+        return inventoryServiceInt.getAllInventoryWhereSalesIsMoreThenOne();
     }
-    @GetMapping("/getAllInventoryWhereQuantityProductIsEmpty")
+    @GetMapping("/quantity_product_empty")
     public List<Inventory> getAllInventoryWhereQuantityProductIsEmpty(){
-        return inventoryService.getAllInventoryWhereQuantityProductIsMoreThenOne();
+        return inventoryServiceInt.getAllInventoryWhereQuantityProductIsMoreThenOne();
     }
 }

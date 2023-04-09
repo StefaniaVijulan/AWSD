@@ -3,12 +3,8 @@ package com.example.OnlineShop.controller;
 import com.example.OnlineShop.dto.category.CategoryRequest;
 import com.example.OnlineShop.dto.category.CategoryResponse;
 import com.example.OnlineShop.model.Category;
-import com.example.OnlineShop.model.Order;
-import com.example.OnlineShop.model.Product;
-import com.example.OnlineShop.repository.CategoryRepository;
 import com.example.OnlineShop.service.CategoryService;
-import com.example.OnlineShop.service.ProductService;
-import org.springframework.http.ResponseEntity;
+import com.example.OnlineShop.service.CategoryServiceInt;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
@@ -18,34 +14,31 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryController {
 
-    private final CategoryService categoryService;
+    private final CategoryServiceInt categoryServiceInt;
 
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
+    public CategoryController(CategoryService categoryService, CategoryServiceInt categoryServiceInt) {
+        this.categoryServiceInt = categoryServiceInt;
     }
 
-    @PostMapping("/addCategory")
-    public CategoryResponse addCategory(@RequestBody CategoryRequest category) throws Exception {
-        return categoryService.addCategory(category);
-    }
-    @PutMapping("/editCategory")
+
+    @PutMapping
     public CategoryResponse editCategory(@RequestBody CategoryRequest category, @RequestParam @NotNull Integer idCategory){
-        return  categoryService.editCategory(category, idCategory);
+        return  categoryServiceInt.editCategory(category, idCategory);
     }
 
-    @DeleteMapping("/deleteCategory")
+    @DeleteMapping
     public String deleteCategory(@RequestParam Integer idCategory){
-        return categoryService.deleteCategory(idCategory);
+        return categoryServiceInt.deleteCategory(idCategory);
     }
 
-    @GetMapping("/getAllCategory")
+    @GetMapping
     public List<Category> getAllCategory(){
-        return categoryService.getAllCategory();
+        return categoryServiceInt.getAllCategory();
     }
 
-    @GetMapping("/getCategoryByName")
+    @GetMapping("/name")
     public List<Category> getCategoryByName(@RequestParam String nameCategory){
-        return categoryService.getAllCategoryWithASpecificName(nameCategory);
+        return categoryServiceInt.getAllCategoryWithASpecificName(nameCategory);
     }
 
 }

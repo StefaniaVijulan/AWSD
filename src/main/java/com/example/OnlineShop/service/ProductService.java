@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Locale;
 
 @Service
-public class ProductService {
+public class ProductService implements ProductServiceInt{
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
@@ -28,7 +28,7 @@ public class ProductService {
         this.inventoryRepository = inventoryRepository;
     }
 
-    public ProductResponse addProduct(ProductRequest product, Integer idCategory) throws Exception {
+    public ProductResponse addProduct(ProductRequest product, Integer idCategory) {
         Product product1 = productRepository.findByTitleProduct(product.getTitleProduct());
         if(product1 != null){
             throw new Custom("A product with this name exist");

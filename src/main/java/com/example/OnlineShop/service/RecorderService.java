@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class RecorderService {
+public class RecorderService implements RecorderServiceInt{
 
     private final RecorderRepository recorderRepository;
 

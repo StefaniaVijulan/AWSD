@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class OrderService {
+public class OrderService implements OrderServiceInt{
 
     private final OrderRepository orderRepository;
 

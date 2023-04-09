@@ -4,7 +4,7 @@ import com.example.OnlineShop.dto.order.OrderRequest;
 import com.example.OnlineShop.dto.order.OrderResponse;
 import com.example.OnlineShop.model.Order;
 import com.example.OnlineShop.model.Product;
-import com.example.OnlineShop.service.OrderService;
+import com.example.OnlineShop.service.OrderServiceInt;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -14,40 +14,41 @@ import java.util.List;
 @RequestMapping("/order")
 public class OrderController {
 
-    private final OrderService orderService;
+    private final OrderServiceInt orderServiceInt;
 
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
+    public OrderController(OrderServiceInt orderServiceInt) {
+        this.orderServiceInt = orderServiceInt;
     }
 
-    @PostMapping("/addOrder")
+
+    @PostMapping
     public OrderResponse addOrder(@RequestBody @Valid OrderRequest order, @RequestParam Integer idCustomer){
-        return orderService.addOrder(order, idCustomer);
+        return orderServiceInt.addOrder(order, idCustomer);
     }
 
-    @PutMapping("/editOrder")
+    @PutMapping
     public OrderResponse editOrder(@RequestBody OrderRequest order, @RequestParam Integer idOrder){
-        return  orderService.editOrder(order, idOrder);
+        return  orderServiceInt.editOrder(order, idOrder);
     }
 
-    @DeleteMapping("/deleteOrder")
+    @DeleteMapping
     public String deleteOrder(@RequestParam Integer idOrder){
-        return orderService.deleteOrder(idOrder);
+        return orderServiceInt.deleteOrder(idOrder);
     }
 
-    @GetMapping("/getAllOrder")
+    @GetMapping
     public List<Order> getAllOrders(){
-        return orderService.orderList();
+        return orderServiceInt.orderList();
     }
 
-    @PutMapping("/editVoucher/{idOrder}")
+    @PutMapping("/{idOrder}")
     public String editVoucher(@PathVariable Integer idOrder, @RequestParam Double newVoucher){
-        return orderService.editVoucher(idOrder, newVoucher);
+        return orderServiceInt.editVoucher(idOrder, newVoucher);
 
     }
-    @GetMapping("/getAllProductList")
+    @GetMapping("/product_list")
     public List<Product> listOfProduct(@RequestParam Integer idOrder){
-        return orderService.productList(idOrder);
+        return orderServiceInt.productList(idOrder);
     }
 
 }

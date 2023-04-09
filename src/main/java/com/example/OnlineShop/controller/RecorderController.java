@@ -2,13 +2,10 @@ package com.example.OnlineShop.controller;
 
 import com.example.OnlineShop.dto.recorder.RecorderRequest;
 import com.example.OnlineShop.dto.recorder.RecorderResponse;
-import com.example.OnlineShop.model.Order;
 import com.example.OnlineShop.model.Recorder;
-import com.example.OnlineShop.service.RecorderService;
-import lombok.Data;
+import com.example.OnlineShop.service.RecorderServiceInt;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,36 +15,37 @@ import java.util.List;
 @RequestMapping("/recorder")
 public class RecorderController {
 
-    private final RecorderService recorderService;
+    private final RecorderServiceInt recorderServiceInt;
 
-    public RecorderController(RecorderService recorderService) {
-        this.recorderService = recorderService;
+    public RecorderController(RecorderServiceInt recorderServiceInt) {
+        this.recorderServiceInt = recorderServiceInt;
     }
-    @PostMapping("/addRecorder")
+
+    @PostMapping
     public RecorderResponse addRecorder(@RequestBody RecorderRequest recorder, @RequestParam Integer idOrder){
-        return recorderService.addRecorder(recorder, idOrder);
+        return recorderServiceInt.addRecorder(recorder, idOrder);
     }
 
-    @PutMapping("/editRecorder")
+    @PutMapping
     public RecorderResponse editRecorder(@RequestBody RecorderRequest recorder, @RequestParam Integer idRecorder){
-        return  recorderService.editRecorder(recorder, idRecorder);
+        return  recorderServiceInt.editRecorder(recorder, idRecorder);
     }
 
-    @DeleteMapping("/deleteRecorder")
+    @DeleteMapping
     public String deleteRecorder(@RequestParam Integer idRecorder){
 
-        return recorderService.deleteRecorder(idRecorder);
+        return recorderServiceInt.deleteRecorder(idRecorder);
     }
 
-    @GetMapping("/getAllRecorder")
+    @GetMapping
     public List<Recorder> getAllRecorder(){
-        return recorderService.getAllRecorders();
+        return recorderServiceInt.getAllRecorders();
     }
 
-    @PutMapping("/editDataExpected/{idRecorder}")
+    @PutMapping("/{idRecorder}")
     public Recorder editDataExpected(@PathVariable Integer idRecorder, @RequestParam String dataExpected) throws ParseException {
         Date date1=new SimpleDateFormat("yyyy-MM-DD").parse(dataExpected);
-        return recorderService.editDataExpected(idRecorder, date1);
+        return recorderServiceInt.editDataExpected(idRecorder, date1);
 
     }
 
