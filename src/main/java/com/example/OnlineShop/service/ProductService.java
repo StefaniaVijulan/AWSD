@@ -80,23 +80,4 @@ public class ProductService implements ProductServiceInt{
     public List<Product> getAllProduct(){
         return productRepository.findAll();
     }
-    public List<Product> getAllProductWithPriceBiggerThenAValue(Double value)
-    {
-        List<Product> productList = new ArrayList<>();
-        for(int i=0; i<productRepository.findAll().size(); i++){
-            if (productRepository.findAll().get(i).getPriceProduct() > value) {
-                productList.add(productRepository.findAll().get(i));
-            }
-        }
-        return productList;
-    }
-    public String editCurrentCategory(Integer idProduct, Integer newCategory){
-        Product product1 = productRepository.findById(idProduct).orElseThrow(
-                () -> new Custom("Product with this id is not found"));
-        Category category1 = categoryRepository.findById(newCategory).orElseThrow(
-                () -> new Custom("Category with this id is not found"));
-        product1.setCategory(category1);
-        productRepository.save(product1);
-        return "Category change";
-    }
 }

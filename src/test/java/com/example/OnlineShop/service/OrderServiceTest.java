@@ -1,16 +1,13 @@
 package com.example.OnlineShop.service;
 
 
-import com.example.OnlineShop.dto.inventory.InventoryRequest;
-import com.example.OnlineShop.dto.inventory.InventoryResponse;
 import com.example.OnlineShop.dto.order.OrderRequest;
 import com.example.OnlineShop.dto.order.OrderResponse;
-import com.example.OnlineShop.model.Customer;
-import com.example.OnlineShop.model.Inventory;
 import com.example.OnlineShop.model.Order;
-import com.example.OnlineShop.repository.CustomerRepository;
+import com.example.OnlineShop.model.User;
 import com.example.OnlineShop.repository.OrderRepository;
 import com.example.OnlineShop.repository.ProductRepository;
+import com.example.OnlineShop.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +34,7 @@ public class OrderServiceTest {
     private OrderRepository orderRepository;
 
     @Mock
-    private CustomerRepository customerRepository;
+    private UserRepository userRepository;
 
     @Mock
     private ProductRepository productRepository;
@@ -48,14 +45,14 @@ public class OrderServiceTest {
     void addOrder() {
         //mock entity
 
-        Customer customer = new Customer();
-        customer.setIdCustomer(1);
-        customer.setAddressCustomer("Targu Jiu, Gorj");
-        customer.setEmailCustomer("test@gmail.com");
-        customer.setPasswordCustomer("parola");
-        customer.setUsernameCustomer("test");
-        customer.setLastNameCustomer("Test");
-        customer.setFirstNameCustomer("Test");
+        User user = new User();
+        user.setIdUser(1);
+        user.setAddressUser("Targu Jiu, Gorj");
+        user.setEmailUser("test@gmail.com");
+        user.setPasswordUser("parola");
+        user.setUsernameUser("test");
+        user.setLastNameUser("Test");
+        user.setFirstNameUser("Test");
 
         Order order = new Order();
         order.setDateOrder(new Date(2023 - 01 - 10));
@@ -63,16 +60,16 @@ public class OrderServiceTest {
         order.setTaxPriceOrder(10.0);
         order.setTotalPriceOrder(170.0);
         order.setVoucherOrder(5.0);
-        order.setCustomer(customer);
+        order.setUser(user);
         order.setProducts(null);
 
         //mock response
         OrderResponse orderResponse = new OrderResponse((new Date(2023 - 01 - 10)), 170.0);
         //mock request
         OrderRequest orderRequest = new OrderRequest((new Date(2023 - 01 - 10)), 120.0, 10.0, 170.0, 5.0, null);
-        lenient().when(customerRepository.findById(1)).thenReturn(java.util.Optional.of(customer));
+        lenient().when(userRepository.findById(1)).thenReturn(java.util.Optional.of(user));
         lenient().when(orderRepository.save(order)).thenReturn(order);
-        OrderResponse actual = orderService.addOrder(orderRequest, customer.getIdCustomer());
+        OrderResponse actual = orderService.addOrder(orderRequest, user.getIdUser());
         assertEquals(actual, orderResponse);
     }
 
@@ -82,14 +79,14 @@ public class OrderServiceTest {
     void editOrder() {
 
 
-        Customer customer = new Customer();
-        customer.setIdCustomer(1);
-        customer.setAddressCustomer("Targu Jiu, Gorj");
-        customer.setEmailCustomer("test@gmail.com");
-        customer.setPasswordCustomer("parola");
-        customer.setUsernameCustomer("test");
-        customer.setLastNameCustomer("Test");
-        customer.setFirstNameCustomer("Test");
+        User user = new User();
+        user.setIdUser(1);
+        user.setAddressUser("Targu Jiu, Gorj");
+        user.setEmailUser("test@gmail.com");
+        user.setPasswordUser("parola");
+        user.setUsernameUser("test");
+        user.setLastNameUser("Test");
+        user.setFirstNameUser("Test");
 
         Order order = new Order();
         order.setIdOrder(2);
@@ -98,14 +95,14 @@ public class OrderServiceTest {
         order.setTaxPriceOrder(10.0);
         order.setTotalPriceOrder(170.0);
         order.setVoucherOrder(5.0);
-        order.setCustomer(customer);
+        order.setUser(user);
         order.setProducts(null);
 
         //mock response
         OrderResponse orderResponse = new OrderResponse((new Date(2023 - 01 - 10)), 270.0);
         //mock request
         OrderRequest orderRequest = new OrderRequest((new Date(2023 - 01 - 10)), 120.0, 10.0, 270.0, 5.0, null);
-        lenient().when(customerRepository.findById(1)).thenReturn(java.util.Optional.of(customer));
+        lenient().when(userRepository.findById(1)).thenReturn(java.util.Optional.of(user));
         lenient().when(orderRepository.findById(2)).thenReturn(java.util.Optional.of(order));
         lenient().when(orderRepository.save(order)).thenReturn(order);
         OrderResponse actual = orderService.editOrder(orderRequest, order.getIdOrder());
@@ -117,14 +114,14 @@ public class OrderServiceTest {
     void getAllOrder() {
         List<Order> orderList = new ArrayList<>();
         Order order = new Order();
-        Customer customer = new Customer();
-        customer.setIdCustomer(1);
-        customer.setAddressCustomer("Targu Jiu, Gorj");
-        customer.setEmailCustomer("test@gmail.com");
-        customer.setPasswordCustomer("parola");
-        customer.setUsernameCustomer("test");
-        customer.setLastNameCustomer("Test");
-        customer.setFirstNameCustomer("Test");
+        User user = new User();
+        user.setIdUser(1);
+        user.setAddressUser("Targu Jiu, Gorj");
+        user.setEmailUser("test@gmail.com");
+        user.setPasswordUser("parola");
+        user.setUsernameUser("test");
+        user.setLastNameUser("Test");
+        user.setFirstNameUser("Test");
 
         order.setIdOrder(2);
         order.setDateOrder(new Date(2023 - 01 - 10));
@@ -132,7 +129,7 @@ public class OrderServiceTest {
         order.setTaxPriceOrder(10.0);
         order.setTotalPriceOrder(170.0);
         order.setVoucherOrder(5.0);
-        order.setCustomer(customer);
+        order.setUser(user);
         order.setProducts(null);
         orderList.add(order);
 
@@ -142,7 +139,7 @@ public class OrderServiceTest {
         order.setTaxPriceOrder(10.0);
         order.setTotalPriceOrder(170.0);
         order.setVoucherOrder(25.0);
-        order.setCustomer(customer);
+        order.setUser(user);
         order.setProducts(null);
         orderList.add(order);
 
@@ -158,14 +155,14 @@ public class OrderServiceTest {
     void deleteOrder() {
 
         Order order = new Order();
-        Customer customer = new Customer();
-        customer.setIdCustomer(1);
-        customer.setAddressCustomer("Targu Jiu, Gorj");
-        customer.setEmailCustomer("test@gmail.com");
-        customer.setPasswordCustomer("parola");
-        customer.setUsernameCustomer("test");
-        customer.setLastNameCustomer("Test");
-        customer.setFirstNameCustomer("Test");
+        User user = new User();
+        user.setIdUser(1);
+        user.setAddressUser("Targu Jiu, Gorj");
+        user.setEmailUser("test@gmail.com");
+        user.setPasswordUser("parola");
+        user.setUsernameUser("test");
+        user.setLastNameUser("Test");
+        user.setFirstNameUser("Test");
 
         order.setIdOrder(2);
         order.setDateOrder(new Date(2023 - 01 - 10));
@@ -173,7 +170,7 @@ public class OrderServiceTest {
         order.setTaxPriceOrder(10.0);
         order.setTotalPriceOrder(170.0);
         order.setVoucherOrder(5.0);
-        order.setCustomer(customer);
+        order.setUser(user);
         order.setProducts(null);
         when(orderRepository.findById(order.getIdOrder())).thenReturn(Optional.ofNullable(order));
 

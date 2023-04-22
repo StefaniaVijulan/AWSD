@@ -36,9 +36,5 @@ public class CategoryController {
         return categoryServiceInt.getAllCategory();
     }
 
-    @GetMapping("/name")
-    public List<Category> getCategoryByName(@RequestParam String nameCategory){
-        return categoryServiceInt.getAllCategoryWithASpecificName(nameCategory);
-    }
 
 }

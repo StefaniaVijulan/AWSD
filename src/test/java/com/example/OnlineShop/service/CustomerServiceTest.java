@@ -1,11 +1,11 @@
 package com.example.OnlineShop.service;
 
 
-import com.example.OnlineShop.dto.customer.CustomerLogin;
-import com.example.OnlineShop.dto.customer.CustomerRequest;
-import com.example.OnlineShop.dto.customer.CustomerResponse;
-import com.example.OnlineShop.model.Customer;
-import com.example.OnlineShop.repository.CustomerRepository;
+import com.example.OnlineShop.dto.user.UserLogin;
+import com.example.OnlineShop.dto.user.UserResponse;
+import com.example.OnlineShop.dto.user.UserRequest;
+import com.example.OnlineShop.model.User;
+import com.example.OnlineShop.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,33 +24,33 @@ import static org.mockito.Mockito.when;
 public class CustomerServiceTest {
 
     @InjectMocks
-    private CustomerService customerService;
+    private UserService userService;
 
     @Mock
-    private CustomerRepository customerRepository;
+    private UserRepository userRepository;
 
 
     @Test
     @DisplayName("Login customer Test")
     void loginCustomer() throws Exception {
         //mock entity
-        Customer customer = new Customer();
-        customer.setAddressCustomer("Targu Jiu, Gorj");
-        customer.setEmailCustomer("test@gmail.com");
-        customer.setPasswordCustomer("parola");
-        customer.setUsernameCustomer("test");
-        customer.setLastNameCustomer("Test");
-        customer.setFirstNameCustomer("Test");
+        User user = new User();
+        user.setAddressUser("Targu Jiu, Gorj");
+        user.setEmailUser("test@gmail.com");
+        user.setPasswordUser("parola");
+        user.setUsernameUser("test");
+        user.setLastNameUser("Test");
+        user.setFirstNameUser("Test");
 
         //mock response
-        CustomerLogin customerLogin = new CustomerLogin("test", "parola");
+        UserLogin userLogin = new UserLogin("test", "parola");
         //mock request
-        CustomerResponse customerResponse = new CustomerResponse("Test", "Test", "test@gmail.com");
-        lenient().when(customerRepository.findCustomerByUsernameCustomerAndPasswordCustomer("test", "parola")).thenReturn(customer);
+        UserResponse userResponse = new UserResponse("Test", "Test", "test@gmail.com");
+        lenient().when(userRepository.findUserByUsernameUserAndPasswordUser("test", "parola")).thenReturn(user);
 
-        lenient().when(customerRepository.save(customer)).thenReturn(customer);
-        CustomerResponse actual = customerService.loginCustomer(customerLogin);
-        assertEquals(actual, customerResponse);
+        lenient().when(userRepository.save(user)).thenReturn(user);
+        UserResponse actual = userService.loginUser(userLogin);
+        assertEquals(actual, userResponse);
 
 
     }
@@ -61,24 +59,24 @@ public class CustomerServiceTest {
     @DisplayName("Login customer Test")
     void registerCustomer() throws Exception {
         //mock entity
-        Customer customer = new Customer();
-        customer.setIdCustomer(1);
-        customer.setAddressCustomer("Targu Jiu, Gorj");
-        customer.setEmailCustomer("test@gmail.com");
-        customer.setPasswordCustomer("parola");
-        customer.setUsernameCustomer("test");
-        customer.setLastNameCustomer("Test");
-        customer.setFirstNameCustomer("Test");
+        User user = new User();
+        user.setIdUser(1);
+        user.setAddressUser("Targu Jiu, Gorj");
+        user.setEmailUser("test@gmail.com");
+        user.setPasswordUser("parola");
+        user.setUsernameUser("test");
+        user.setLastNameUser("Test");
+        user.setFirstNameUser("Test");
 
         //mock response
-        CustomerRequest customerRequest = new CustomerRequest(1, "Test", "Test", "test@gmail.com", "test 2", "parola", "Targu Jiu, Gorj");
+        UserRequest customerRequest = new UserRequest(1, "Test", "Test", "test@gmail.com", "test 2", "parola", "Targu Jiu, Gorj");
         //mock request
-        CustomerResponse customerResponse = new CustomerResponse("Test", "Test", "test@gmail.com");
-        lenient().when(customerRepository.findUserByUsernameCustomer("test")).thenReturn(customer);
+        UserResponse userResponse = new UserResponse("Test", "Test", "test@gmail.com");
+        lenient().when(userRepository.findUserByUsernameUser("test")).thenReturn(user);
 
-        lenient().when(customerRepository.save(customer)).thenReturn(customer);
-        CustomerResponse actual = customerService.registerCustomer(customerRequest);
-        assertEquals(actual, customerResponse);
+        lenient().when(userRepository.save(user)).thenReturn(user);
+        UserResponse actual = userService.registerUser(customerRequest);
+        assertEquals(actual, userResponse);
 
 
     }
@@ -87,24 +85,24 @@ public class CustomerServiceTest {
     @DisplayName("Edit category - Test")
     void editCategory() throws Exception {
         //mock entity
-        Customer customer = new Customer();
-        customer.setIdCustomer(1);
-        customer.setAddressCustomer("Targu Jiu, Gorj");
-        customer.setEmailCustomer("test@gmail.com");
-        customer.setPasswordCustomer("parola");
-        customer.setUsernameCustomer("test");
-        customer.setLastNameCustomer("Test");
-        customer.setFirstNameCustomer("Test");
+        User user = new User();
+        user.setIdUser(1);
+        user.setAddressUser("Targu Jiu, Gorj");
+        user.setEmailUser("test@gmail.com");
+        user.setPasswordUser("parola");
+        user.setUsernameUser("test");
+        user.setLastNameUser("Test");
+        user.setFirstNameUser("Test");
 
         //mock response
-        CustomerRequest customerRequest = new CustomerRequest(1, "Test", "Test 2", "test@gmail.com", "test", "parola", "Targu Jiu, Gorj");
+        UserRequest userRequest = new UserRequest(1, "Test", "Test 2", "test@gmail.com", "test", "parola", "Targu Jiu, Gorj");
         //mock request
-        CustomerResponse customerResponse = new CustomerResponse("Test", "Test 2", "test@gmail.com");
-        lenient().when(customerRepository.findById(1)).thenReturn(java.util.Optional.of(customer));
+        UserResponse userResponse = new UserResponse("Test", "Test 2", "test@gmail.com");
+        lenient().when(userRepository.findById(1)).thenReturn(java.util.Optional.of(user));
 
-        lenient().when(customerRepository.save(customer)).thenReturn(customer);
-        CustomerResponse actual = customerService.editCustomer(customerRequest);
-        assertEquals(actual, customerResponse);
+        lenient().when(userRepository.save(user)).thenReturn(user);
+        UserResponse actual = userService.editUser(userRequest);
+        assertEquals(actual, userResponse);
 
     }
 
@@ -113,20 +111,20 @@ public class CustomerServiceTest {
 //    void getAllCategory(){
 //        List<Customer> customerList = new ArrayList<>();
 //        Customer customer = new Customer();
-//        customer.setAddressCustomer("Targu Jiu, Gorj");
-//        customer.setEmailCustomer("test@gmail.com");
-//        customer.setPasswordCustomer("parola");
-//        customer.setUsernameCustomer("test");
-//        customer.setLastNameCustomer("Test");
-//        customer.setFirstNameCustomer("Test");
+//        user.setAddressCustomer("Targu Jiu, Gorj");
+//        user.setEmailCustomer("test@gmail.com");
+//        user.setPasswordCustomer("parola");
+//        user.setUsernameCustomer("test");
+//        user.setLastNameCustomer("Test");
+//        user.setFirstNameCustomer("Test");
 //        customerList.add(customer);
 //
-//        customer.setAddressCustomer("Targu Jiu, Gorj");
-//        customer.setEmailCustomer("test@gmail.com");
-//        customer.setPasswordCustomer("parola");
-//        customer.setUsernameCustomer("test2");
-//        customer.setLastNameCustomer("Test2");
-//        customer.setFirstNameCustomer("Test2");
+//        user.setAddressCustomer("Targu Jiu, Gorj");
+//        user.setEmailCustomer("test@gmail.com");
+//        user.setPasswordCustomer("parola");
+//        user.setUsernameCustomer("test2");
+//        user.setLastNameCustomer("Test2");
+//        user.setFirstNameCustomer("Test2");
 //        customerList.add(customer);
 //
 //        when(customerRepository.findAll()).thenReturn(customerList);
@@ -138,18 +136,18 @@ public class CustomerServiceTest {
     @DisplayName("Delete category - Test")
     void deleteCategory() {
 
-        Customer customer = new Customer();
-        customer.setIdCustomer(1);
-        customer.setAddressCustomer("Targu Jiu, Gorj");
-        customer.setEmailCustomer("test@gmail.com");
-        customer.setPasswordCustomer("parola");
-        customer.setUsernameCustomer("test");
-        customer.setLastNameCustomer("Test");
-        customer.setFirstNameCustomer("Test");
+        User user = new User();
+        user.setIdUser(1);
+        user.setAddressUser("Targu Jiu, Gorj");
+        user.setEmailUser("test@gmail.com");
+        user.setPasswordUser("parola");
+        user.setUsernameUser("test");
+        user.setLastNameUser("Test");
+        user.setFirstNameUser("Test");
 
-        when(customerRepository.findById(customer.getIdCustomer())).thenReturn(Optional.ofNullable(customer));
+        when(userRepository.findById(user.getIdUser())).thenReturn(Optional.ofNullable(user));
 
-        String result = customerService.deleteCustomer(customer.getIdCustomer());
+        String result = userService.deleteUser(user.getIdUser());
         assertEquals(result, "The customer was successfully delete");
 
     }

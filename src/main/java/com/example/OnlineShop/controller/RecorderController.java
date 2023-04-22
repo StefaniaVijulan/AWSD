@@ -42,11 +42,4 @@ public class RecorderController {
         return recorderServiceInt.getAllRecorders();
     }
 
-    @PutMapping("/{idRecorder}")
-    public Recorder editDataExpected(@PathVariable Integer idRecorder, @RequestParam String dataExpected) throws ParseException {
-        Date date1=new SimpleDateFormat("yyyy-MM-DD").parse(dataExpected);
-        return recorderServiceInt.editDataExpected(idRecorder, date1);
-
-    }
-
 }

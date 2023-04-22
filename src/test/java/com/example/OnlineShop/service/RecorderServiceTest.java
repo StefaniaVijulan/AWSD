@@ -1,15 +1,11 @@
 package com.example.OnlineShop.service;
 
 
-import com.example.OnlineShop.dto.category.CategoryRequest;
-import com.example.OnlineShop.dto.category.CategoryResponse;
 import com.example.OnlineShop.dto.recorder.RecorderRequest;
 import com.example.OnlineShop.dto.recorder.RecorderResponse;
-import com.example.OnlineShop.model.Category;
-import com.example.OnlineShop.model.Customer;
 import com.example.OnlineShop.model.Order;
 import com.example.OnlineShop.model.Recorder;
-import com.example.OnlineShop.repository.CategoryRepository;
+import com.example.OnlineShop.model.User;
 import com.example.OnlineShop.repository.OrderRepository;
 import com.example.OnlineShop.repository.RecorderRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -46,14 +42,14 @@ public class RecorderServiceTest {
     @DisplayName("New recorder Test")
     void addRecorder() {
         //mock entity
-        Customer customer = new Customer();
-        customer.setIdCustomer(1);
-        customer.setAddressCustomer("Targu Jiu, Gorj");
-        customer.setEmailCustomer("test@gmail.com");
-        customer.setPasswordCustomer("parola");
-        customer.setUsernameCustomer("test");
-        customer.setLastNameCustomer("Test");
-        customer.setFirstNameCustomer("Test");
+        User user = new User();
+        user.setIdUser(1);
+        user.setAddressUser("Targu Jiu, Gorj");
+        user.setEmailUser("test@gmail.com");
+        user.setPasswordUser("parola");
+        user.setUsernameUser("test");
+        user.setLastNameUser("Test");
+        user.setFirstNameUser("Test");
 
         Order order = new Order();
         order.setIdOrder(1);
@@ -62,7 +58,7 @@ public class RecorderServiceTest {
         order.setTaxPriceOrder(10.0);
         order.setTotalPriceOrder(170.0);
         order.setVoucherOrder(5.0);
-        order.setCustomer(customer);
+        order.setUser(user);
         order.setProducts(null);
 
         Recorder recorder = new Recorder();
@@ -85,14 +81,14 @@ public class RecorderServiceTest {
     @Test
     @DisplayName("Edit recorder - Test")
     void editRecorder() {
-        Customer customer = new Customer();
-        customer.setIdCustomer(3);
-        customer.setAddressCustomer("Targu Jiu, Gorj");
-        customer.setEmailCustomer("test@gmail.com");
-        customer.setPasswordCustomer("parola");
-        customer.setUsernameCustomer("test");
-        customer.setLastNameCustomer("Test");
-        customer.setFirstNameCustomer("Test");
+        User user = new User();
+        user.setIdUser(3);
+        user.setAddressUser("Targu Jiu, Gorj");
+        user.setEmailUser("test@gmail.com");
+        user.setPasswordUser("parola");
+        user.setUsernameUser("test");
+        user.setLastNameUser("Test");
+        user.setFirstNameUser("Test");
 
         Order order = new Order();
         order.setIdOrder(1);
@@ -101,7 +97,7 @@ public class RecorderServiceTest {
         order.setTaxPriceOrder(10.0);
         order.setTotalPriceOrder(170.0);
         order.setVoucherOrder(5.0);
-        order.setCustomer(customer);
+        order.setUser(user);
         order.setProducts(null);
 
         Recorder recorder = new Recorder();
@@ -126,14 +122,14 @@ public class RecorderServiceTest {
     @DisplayName("Get all recorder - Test")
     void getAllRecorder() {
         List<Recorder> recorderList = new ArrayList<>();
-        Customer customer = new Customer();
-        customer.setIdCustomer(3);
-        customer.setAddressCustomer("Targu Jiu, Gorj");
-        customer.setEmailCustomer("test@gmail.com");
-        customer.setPasswordCustomer("parola");
-        customer.setUsernameCustomer("test");
-        customer.setLastNameCustomer("Test");
-        customer.setFirstNameCustomer("Test");
+        User user = new User();
+        user.setIdUser(3);
+        user.setAddressUser("Targu Jiu, Gorj");
+        user.setEmailUser("test@gmail.com");
+        user.setPasswordUser("parola");
+        user.setUsernameUser("test");
+        user.setLastNameUser("Test");
+        user.setFirstNameUser("Test");
 
         Order order = new Order();
         order.setIdOrder(1);
@@ -142,7 +138,7 @@ public class RecorderServiceTest {
         order.setTaxPriceOrder(10.0);
         order.setTotalPriceOrder(170.0);
         order.setVoucherOrder(5.0);
-        order.setCustomer(customer);
+        order.setUser(user);
         order.setProducts(null);
 
         Recorder recorder = new Recorder();
@@ -166,15 +162,14 @@ public class RecorderServiceTest {
     @Test
     @DisplayName("Delete recorder - Test")
     void deleteRecorder(){
-
-        Customer customer = new Customer();
-        customer.setIdCustomer(3);
-        customer.setAddressCustomer("Targu Jiu, Gorj");
-        customer.setEmailCustomer("test@gmail.com");
-        customer.setPasswordCustomer("parola");
-        customer.setUsernameCustomer("test");
-        customer.setLastNameCustomer("Test");
-        customer.setFirstNameCustomer("Test");
+        User user = new User();
+        user.setIdUser(3);
+        user.setAddressUser("Targu Jiu, Gorj");
+        user.setEmailUser("test@gmail.com");
+        user.setPasswordUser("parola");
+        user.setUsernameUser("test");
+        user.setLastNameUser("Test");
+        user.setFirstNameUser("Test");
 
         Order order = new Order();
         order.setIdOrder(1);
@@ -183,7 +178,7 @@ public class RecorderServiceTest {
         order.setTaxPriceOrder(10.0);
         order.setTotalPriceOrder(170.0);
         order.setVoucherOrder(5.0);
-        order.setCustomer(customer);
+        order.setUser(user);
         order.setProducts(null);
 
         Recorder recorder = new Recorder();

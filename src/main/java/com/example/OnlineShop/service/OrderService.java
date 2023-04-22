@@ -3,40 +3,34 @@ package com.example.OnlineShop.service;
 import com.example.OnlineShop.dto.order.OrderRequest;
 import com.example.OnlineShop.dto.order.OrderResponse;
 import com.example.OnlineShop.exception.Custom;
-import com.example.OnlineShop.model.Customer;
 import com.example.OnlineShop.model.Order;
-import com.example.OnlineShop.model.Product;
-import com.example.OnlineShop.repository.CustomerRepository;
+import com.example.OnlineShop.model.User;
 import com.example.OnlineShop.repository.OrderRepository;
-import com.example.OnlineShop.repository.ProductRepository;
-import org.aspectj.weaver.ast.Or;
+import com.example.OnlineShop.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OrderService implements OrderServiceInt{
 
-    private final OrderRepository orderRepository;
+    @Autowired
+    OrderRepository orderRepository;
 
-    private final CustomerRepository customerRepository;
+    @Autowired
+    UserRepository userRepository;
 
-    private final ProductRepository productRepository;
-
-    public OrderService(OrderRepository orderRepository, CustomerRepository customerRepository, ProductRepository productRepository) {
-        this.orderRepository = orderRepository;
-        this.customerRepository = customerRepository;
-        this.productRepository = productRepository;
-    }
-
-    public OrderResponse addOrder(OrderRequest order, Integer idCustomer){
-        Customer customer = customerRepository.findById(idCustomer).orElseThrow(
-                () -> new Custom("This customer id is not found"));
+    @Override
+    public OrderResponse addOrder(OrderRequest order, Integer idUser){
+        User user = userRepository.findById(idUser).orElseThrow(
+                () -> new Custom("This User id is not found"));
 
         Order order1 = new Order();
 
-        order1.setCustomer(customer);
+        order1.setUser(user);
         order1.setDateOrder(order.getDateOrder());
         order1.setVoucherOrder(order.getVoucherOrder());
         order1.setPriceOrder(order.getPriceOrder());
@@ -55,6 +49,7 @@ public class OrderService implements OrderServiceInt{
         return orderResponse;
     }
 
+    @Override
     public OrderResponse editOrder(OrderRequest order, Integer idOrder){
         Order order1 = orderRepository.findById(idOrder).orElseThrow(
                 () -> new Custom("Order with this id is not found"));
@@ -72,6 +67,7 @@ public class OrderService implements OrderServiceInt{
         return orderResponse;
     }
 
+    @Override
     public String deleteOrder(Integer idOrder){
         Order order1 = orderRepository.findById(idOrder).orElseThrow(
                 () -> new RuntimeException("Order with this id is not found"));
@@ -79,21 +75,14 @@ public class OrderService implements OrderServiceInt{
         return "The order was successfully delete";
     }
 
+    @Override
     public List<Order> orderList(){
       return  orderRepository.findAll();
     }
 
-    public List<Product> productList(Integer idOrder){
-        Order order = orderRepository.findById(idOrder).orElseThrow(
-                () -> new Custom("This order id is not found"));
-        return order.getProducts();
-    }
-    public String editVoucher(Integer idOrder, Double newVoucher){
-        Order order1 = orderRepository.findById(idOrder).orElseThrow(
-                () -> new RuntimeException("Order with this id is not found"));
-        order1.setVoucherOrder(newVoucher);
-        orderRepository.save(order1);
-        return "Edit done";
-
+    @Override
+    public Page<Order> findPaginated(Pageable pageable) {
+        Page<Order> orderPage = orderRepository.findAll(pageable);
+        return orderPage;
     }
 }

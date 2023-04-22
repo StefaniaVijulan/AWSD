@@ -1,14 +1,7 @@
 package com.example.OnlineShop.model;
-
-
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,24 +30,24 @@ public class Order {
     private Double voucherOrder;
 
     @ManyToOne
-    @JoinColumn(name = "id_customer")
-    private Customer customer;
+    @JoinColumn(name = "id_user")
+    private User user;
 
 
     @ManyToMany()
-    @JoinTable(name = "order_producct", joinColumns = @JoinColumn(name = "id_order"),
+    @JoinTable(name = "order_product", joinColumns = @JoinColumn(name = "id_order"),
     inverseJoinColumns = @JoinColumn(name = "id_product"))
 
     private List<Product> products = new ArrayList<>();
 
-    public Order(int idOrder, Date dateOrder, Double priceOrder, Double taxPriceOrder, Double totalPriceOrder, Double voucherOrder, Customer customer, List<Product> products) {
+    public Order(int idOrder, Date dateOrder, Double priceOrder, Double taxPriceOrder, Double totalPriceOrder, Double voucherOrder, User user, List<Product> products) {
         this.idOrder = idOrder;
         this.dateOrder = dateOrder;
         this.priceOrder = priceOrder;
         this.taxPriceOrder = taxPriceOrder;
         this.totalPriceOrder = totalPriceOrder;
         this.voucherOrder = voucherOrder;
-        this.customer = customer;
+        this.user = user;
         this.products = products;
     }
 
@@ -85,16 +78,8 @@ public class Order {
         this.dateOrder = dateOrder;
     }
 
-    public Double getPriceOrder() {
-        return priceOrder;
-    }
-
     public void setPriceOrder(Double priceOrder) {
         this.priceOrder = priceOrder;
-    }
-
-    public Double getTaxPriceOrder() {
-        return taxPriceOrder;
     }
 
     public void setTaxPriceOrder(Double taxPriceOrder) {
@@ -109,19 +94,15 @@ public class Order {
         this.totalPriceOrder = totalPriceOrder;
     }
 
-    public Double getVoucherOrder() {
-        return voucherOrder;
-    }
-
     public void setVoucherOrder(Double voucherOrder) {
         this.voucherOrder = voucherOrder;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public User getUser() {
+        return user;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

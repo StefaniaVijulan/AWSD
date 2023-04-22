@@ -8,6 +8,9 @@ import com.example.OnlineShop.model.Category;
 import com.example.OnlineShop.model.Inventory;
 import com.example.OnlineShop.repository.InventoryRepository;
 import com.example.OnlineShop.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -17,15 +20,10 @@ import java.util.List;
 @Service
 public class InventoryService implements InventoryServiceInt{
 
-    public final InventoryRepository inventoryRepository;
+    @Autowired
+    InventoryRepository inventoryRepository;
 
-    public final ProductRepository productRepository;
-
-    public InventoryService(InventoryRepository inventoryRepository, ProductRepository productRepository) {
-        this.inventoryRepository = inventoryRepository;
-        this.productRepository = productRepository;
-    }
-
+    @Override
     public InventoryResponse addInventory(InventoryRequest inventory){
       //  productRepository.save(inventory.getProduct());
         Inventory inventory1 = new Inventory();
@@ -38,6 +36,8 @@ public class InventoryService implements InventoryServiceInt{
         inventoryResponse.setQuantityProduct(inventory.getQuantityProduct());
         return inventoryResponse;
     }
+
+    @Override
     public InventoryResponse editInventory(InventoryRequest inventory, Integer idInventory){
         Inventory inventory1 = inventoryRepository.findById(idInventory).orElseThrow(
                 () -> new RuntimeException("Inventory with this id is not found"));
@@ -49,33 +49,20 @@ public class InventoryService implements InventoryServiceInt{
         inventoryResponse.setQuantityProduct(inventory.getQuantityProduct());
         return inventoryResponse;
     }
+    @Override
     public String deleteInventory(Integer idInventory){
         Inventory inventory = inventoryRepository.findById(idInventory).orElseThrow(
                 () -> new RuntimeException("Inventory with this id is not found"));
         inventoryRepository.delete(inventory);
         return "The inventory was successfully delete";
     }
+    @Override
     public List<Inventory> getAllInventory(){
         return inventoryRepository.findAll();
     }
-    public List<Inventory> getAllInventoryWhereSalesIsMoreThenOne(){
-        List<Inventory> inventoryList = new ArrayList<>();
-        for (int i=0; i<inventoryRepository.findAll().size(); i++){
-            if(inventoryRepository.findAll().get(i).getSalesProduct() == 1){
-                inventoryList.add(inventoryRepository.findAll().get(i));
-
-            }
-        }
-        return inventoryList;
-    }
-    public List<Inventory> getAllInventoryWhereQuantityProductIsMoreThenOne(){
-        List<Inventory> inventoryList = new ArrayList<>();
-        for (int i=0; i<inventoryRepository.findAll().size(); i++){
-            if(inventoryRepository.findAll().get(i).getQuantityProduct() == 1){
-                inventoryList.add(inventoryRepository.findAll().get(i));
-
-            }
-        }
-        return inventoryList;
+    @Override
+    public Page<Inventory> findPaginated(Pageable pageable) {
+        Page<Inventory> inventoryPage = inventoryRepository.findAll(pageable);
+        return inventoryPage;
     }
 }

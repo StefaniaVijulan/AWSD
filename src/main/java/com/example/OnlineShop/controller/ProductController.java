@@ -35,14 +35,5 @@ public class ProductController {
     public List<Product> listOfProducts() throws Exception {
         return productServiceInt.getAllProduct();
     }
-    @GetMapping("/price_bigger_then_value")
-    public List<Product> getAllProductWithPriceBiggerThenAValue(@RequestParam Double value) throws Exception {
-        return productServiceInt.getAllProductWithPriceBiggerThenAValue(value);
-    }
-    @PutMapping("/category")
-    public String editCurrentCategory(@RequestParam Integer idProduct, @RequestParam Integer newCategory){
-        return productServiceInt.editCurrentCategory(idProduct, newCategory);
-    }
-
 
 }

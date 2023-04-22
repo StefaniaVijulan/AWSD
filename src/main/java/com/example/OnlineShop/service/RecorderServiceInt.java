@@ -13,5 +13,4 @@ public interface RecorderServiceInt {
     public RecorderResponse editRecorder(RecorderRequest recorderRequest, Integer idRecorder);
     public String deleteRecorder(Integer idRecorder);
     public List<Recorder> getAllRecorders();
-    public Recorder editDataExpected(Integer idRecorder, Date dataExpected);
 }

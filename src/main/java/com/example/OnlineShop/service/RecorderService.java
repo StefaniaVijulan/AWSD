@@ -63,11 +63,4 @@ public class RecorderService implements RecorderServiceInt{
     public List<Recorder> getAllRecorders(){
         return recorderRepository.findAll();
     }
-    public Recorder editDataExpected(Integer idRecorder, Date dataExpected){
-        System.out.println(dataExpected);
-        Recorder recorder1 =  recorderRepository.findById(idRecorder).orElseThrow(
-                () -> new Custom("This recorder doesnt exist"));
-        recorder1.setDateExpected(dataExpected);
-        return recorder1;
-    }
 }

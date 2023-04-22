@@ -37,12 +37,4 @@ public class InventoryController {
         return inventoryServiceInt.getAllInventory();
     }
 
-    @GetMapping("/salesIs_empty")
-    public List<Inventory> getAllInventoryWhereSalesIsEmpty(){
-        return inventoryServiceInt.getAllInventoryWhereSalesIsMoreThenOne();
-    }
-    @GetMapping("/quantity_product_empty")
-    public List<Inventory> getAllInventoryWhereQuantityProductIsEmpty(){
-        return inventoryServiceInt.getAllInventoryWhereQuantityProductIsMoreThenOne();
-    }
 }

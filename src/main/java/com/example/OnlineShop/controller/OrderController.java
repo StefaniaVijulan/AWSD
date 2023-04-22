@@ -22,8 +22,8 @@ public class OrderController {
 
 
     @PostMapping
-    public OrderResponse addOrder(@RequestBody @Valid OrderRequest order, @RequestParam Integer idCustomer){
-        return orderServiceInt.addOrder(order, idCustomer);
+    public OrderResponse addOrder(@RequestBody @Valid OrderRequest order, @RequestParam Integer idUser){
+        return orderServiceInt.addOrder(order, idUser);
     }
 
     @PutMapping
@@ -39,16 +39,6 @@ public class OrderController {
     @GetMapping
     public List<Order> getAllOrders(){
         return orderServiceInt.orderList();
-    }
-
-    @PutMapping("/{idOrder}")
-    public String editVoucher(@PathVariable Integer idOrder, @RequestParam Double newVoucher){
-        return orderServiceInt.editVoucher(idOrder, newVoucher);
-
-    }
-    @GetMapping("/product_list")
-    public List<Product> listOfProduct(@RequestParam Integer idOrder){
-        return orderServiceInt.productList(idOrder);
     }
 
 }
