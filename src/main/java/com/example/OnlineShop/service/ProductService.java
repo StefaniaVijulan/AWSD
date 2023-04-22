@@ -9,6 +9,7 @@ import com.example.OnlineShop.model.Product;
 import com.example.OnlineShop.repository.CategoryRepository;
 import com.example.OnlineShop.repository.InventoryRepository;
 import com.example.OnlineShop.repository.ProductRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Locale;
 
 @Service
+@Slf4j
 public class ProductService implements ProductServiceInt{
 
     private final ProductRepository productRepository;
@@ -31,6 +33,7 @@ public class ProductService implements ProductServiceInt{
     public ProductResponse addProduct(ProductRequest product, Integer idCategory) {
         Product product1 = productRepository.findByTitleProduct(product.getTitleProduct());
         if(product1 != null){
+            log.error("A product with this name exist)");
             throw new Custom("A product with this name exist");
         }
         Category category1 = categoryRepository.findById(idCategory).orElseThrow(
@@ -51,11 +54,13 @@ public class ProductService implements ProductServiceInt{
         productResponse.setTitleProduct(product2.getTitleProduct());
         productResponse.setDescriptionProduct(product2.getDescriptionProduct());
         productRepository.save(product2);
+        log.error("Product " + product.getTitleProduct() + " add!");
         return productResponse;
     }
     public ProductResponse editProduct(ProductRequest product){
         Product product1 = productRepository.findByTitleProduct(product.getTitleProduct());
         if(product1 == null){
+            log.error("This product doesn't exist");
             throw new Custom("This product doesn't exist");
         }
 
@@ -69,15 +74,20 @@ public class ProductService implements ProductServiceInt{
         productResponse.setPriceProduct(product.getPriceProduct());
         productResponse.setTitleProduct(product.getTitleProduct());
         productResponse.setDescriptionProduct(product.getDescriptionProduct());
+        log.info("Product " + product.getTitleProduct() + " edit!");
         return productResponse;
     }
     public String deleteProduct(Integer idProduct){
         Product product1 = productRepository.findById(idProduct).orElseThrow(
                 () -> new RuntimeException("Product with this id is not found"));
+        log.info("Product " + product1.getTitleProduct() + " delete!");
         productRepository.delete(product1);
+
         return "The product was successfully delete";
     }
     public List<Product> getAllProduct(){
+        log.info("Get all profile done");
+
         return productRepository.findAll();
     }
 }

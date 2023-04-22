@@ -7,6 +7,7 @@ import com.example.OnlineShop.model.Order;
 import com.example.OnlineShop.model.User;
 import com.example.OnlineShop.repository.OrderRepository;
 import com.example.OnlineShop.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Slf4j
 public class OrderService implements OrderServiceInt{
 
     @Autowired
@@ -46,6 +48,7 @@ public class OrderService implements OrderServiceInt{
         orderResponse.setDateOrder(order1.getDateOrder());
         orderResponse.setTotalPriceOrder(order1.getTotalPriceOrder());
 
+        log.info("Order of. " + order.getTotalPriceOrder() + " was successfully added" );
         return orderResponse;
     }
 
