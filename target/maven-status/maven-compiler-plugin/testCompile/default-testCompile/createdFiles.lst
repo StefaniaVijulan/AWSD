@@ -1,0 +1,7 @@
+com\example\OnlineShop\service\CustomerServiceTest.class
+com\example\OnlineShop\service\ProductServiceTest.class
+com\example\OnlineShop\service\RecorderServiceTest.class
+com\example\OnlineShop\service\CategoryServiceTest.class
+com\example\OnlineShop\service\InventoryServiceTest.class
+com\example\OnlineShop\OnlineShopApplicationTests.class
+com\example\OnlineShop\service\OrderServiceTest.class

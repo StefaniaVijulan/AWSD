@@ -28,9 +28,11 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public UserResponse registerUser(@RequestBody @Valid UserRequest user) throws Exception {
+    public String registerUser(@RequestBody @Valid UserRequest user) throws Exception {
 
-        return userServiceInt.registerUser(user);
+        System.out.println("Ajungem aici");
+        userServiceInt.registerUser(user);
+        return "done";
     }
 
     @PutMapping

@@ -2,6 +2,7 @@ package com.example.OnlineShop.dto.category;
 
 import com.example.OnlineShop.model.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +21,14 @@ public class CategoryRequest {
 
     @NotNull(message = "The name cannot be null")
     @NotEmpty(message = "The name cannot be empty")
+    @JsonProperty("nameCategory")
     private String nameCategory;
 
     public CategoryRequest(String nameCategory) {
         this.nameCategory = nameCategory;
     }
+
+    public CategoryRequest() {
+    }
+
 }

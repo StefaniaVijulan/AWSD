@@ -19,7 +19,10 @@ public class CategoryController {
     public CategoryController(CategoryService categoryService, CategoryServiceInt categoryServiceInt) {
         this.categoryServiceInt = categoryServiceInt;
     }
-
+    @PostMapping
+    public CategoryResponse addCategory(@RequestBody CategoryRequest category) throws Exception {
+        return categoryServiceInt.addCategory(category);
+    }
 
     @PutMapping
     public CategoryResponse editCategory(@RequestBody CategoryRequest category, @RequestParam @NotNull Integer idCategory){

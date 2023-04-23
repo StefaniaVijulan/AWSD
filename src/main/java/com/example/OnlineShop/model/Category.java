@@ -1,6 +1,8 @@
 package com.example.OnlineShop.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -16,6 +18,7 @@ public class Category {
 
     @NotNull(message = "The name cannot be null")
     @NotEmpty(message = "The name cannot be empty")
+    @JsonProperty("nameCategory")
     private String nameCategory;
 
     @OneToMany(mappedBy = "category")
@@ -29,7 +32,7 @@ public class Category {
         this.nameCategory = nameCategory;
         this.productList = productList;
     }
-
+    @JsonCreator
     public Category() {
     }
 
