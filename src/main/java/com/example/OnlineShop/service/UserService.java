@@ -9,41 +9,56 @@ import com.example.OnlineShop.model.User;
 import com.example.OnlineShop.model.Order;
 import com.example.OnlineShop.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 @Slf4j
-public class UserService implements UserServiceInt{
+public class UserService implements UserServiceInt, UserDetailsService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public UserResponse loginUser(UserLogin user) {
-        String username = user.getUsernameUser();
-        String password = user.getPasswordUser();
-        User user1 = null;
-        if(username != null && password != null){
-            log.info("Se cauta user-ul in baza de date");
-            user1 = userRepository.findUserByUsernameUserAndPasswordUser(username, password);
-        }
-        if(user1 == null){
-            log.error("This user does not exist");
-            throw new Custom("This user does not exist");
-        }
-        UserResponse userResponse = new UserResponse();
-        userResponse.setEmailUser(user1.getEmailUser());
-        userResponse.setFirstNameUser(user1.getFirstNameUser());
-        userResponse.setLastNameUser(user1.getLastNameUser());
-        log.info(userResponse.toString());
-        return userResponse;
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println(username);
+        UserDetails user = userRepository.findUserByUsernameUser(username);
 
+        if(user == null){
+            user = userRepository.findUserByUsernameUser(username);
+        }
+        if(user == null){
+            throw new UsernameNotFoundException(
+                    String.format("username %s not found", username));
+        }
+
+        return user;
     }
+    public User loginUser(String username, String password){
+        if (!userRepository.existsByUsernameUser(username)) {
+            throw new IllegalStateException("Cnp doesn't exist");
+        }
 
+        User userProfile = userRepository.findUserByUsernameUser(username);
+        String pass = userProfile.getPassword();
+        if (!bCryptPasswordEncoder.matches(password, pass)) {
+            throw new IllegalStateException("Cnp doesnt exist");
+
+        }
+        System.out.println(userProfile);
+        return userProfile;
+    }
     public UserResponse registerUser(UserRequest User) {
+        System.out.println("here");
         String username = User.getUsernameUser();
         if(username != null && !"".equals(username)){
             User user1 = userRepository.findUserByUsernameUser(username);
@@ -57,8 +72,13 @@ public class UserService implements UserServiceInt{
         user1.setLastNameUser(User.getLastNameUser());
         user1.setEmailUser(User.getEmailUser());
         user1.setUsernameUser(User.getUsernameUser());
-        user1.setPasswordUser(User.getPasswordUser());
+        user1.setPasswordUser(bCryptPasswordEncoder.encode(User.getPasswordUser()));
         user1.setAddressUser(User.getAddressUser());
+        if(User.getRoleUser().equals("")){
+            user1.setRoleUser("client");
+        }else{
+            user1.setRoleUser(User.getRoleUser());
+        }
         userRepository.save(user1);
         UserResponse UserResponse = new UserResponse();
         UserResponse.setEmailUser(User.getEmailUser());

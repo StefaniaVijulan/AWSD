@@ -49,7 +49,7 @@ public class CustomerServiceTest {
         lenient().when(userRepository.findUserByUsernameUserAndPasswordUser("test", "parola")).thenReturn(user);
 
         lenient().when(userRepository.save(user)).thenReturn(user);
-        UserResponse actual = userService.loginUser(userLogin);
+        User actual = userService.loginUser(userLogin.getUsernameUser(), userLogin.getPasswordUser());
         assertEquals(actual, userResponse);
 
 

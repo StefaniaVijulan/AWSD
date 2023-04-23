@@ -40,6 +40,7 @@ public class UserRequest {
     @NotEmpty(message = "Password cannot be empty")
     private String passwordUser;
 
+    private String roleUser;
 
     @NotNull(message = "Address cannot be null")
     @NotEmpty(message = "Address name cannot be empty")

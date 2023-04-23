@@ -18,6 +18,7 @@ public class UserLogin{
     @NotEmpty(message = "Password cannot be empty")
     private String passwordUser;
 
+
     public UserLogin(String usernameUser, String passwordUser) {
         this.usernameUser = usernameUser;
         this.passwordUser = passwordUser;

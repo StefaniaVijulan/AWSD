@@ -24,6 +24,7 @@ public class UserResponse {
     @NotNull(message = "Email cannot be null")
     @NotEmpty(message = "Email cannot be empty")
     private String emailUser;
+    private String jwt;
 
     public UserResponse(String firstNameUser, String lastNameUser, String emailUser) {
         this.firstNameUser = firstNameUser;
