@@ -148,7 +148,7 @@ public class CustomerServiceTest {
         when(userRepository.findById(user.getIdUser())).thenReturn(Optional.ofNullable(user));
 
         String result = userService.deleteUser(user.getIdUser());
-        assertEquals(result, "The customer was successfully delete");
+        assertEquals(result, "The user was successfully delete");
 
     }
 }
